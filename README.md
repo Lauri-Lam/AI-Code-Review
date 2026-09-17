@@ -32,18 +32,50 @@
 
 ## Running the Project
 
+### First-time Setup
+
+After cloning the repository, open a terminal in the project root and install the dependencies for each application:
+
+```bash
+cd client
+npm install
+
+cd ../server
+npm install
+```
+
+The client and server have separate `package.json` files, so each folder must be installed independently.
+
 ### Frontend
 
+Open a terminal in `client` and start the Vue development server:
+
+```bash
+cd client
+npm run dev
+```
+
+The client runs at `http://localhost:5173` by default.
+
 ### Backend
+
+Open a second terminal in `server` and start the Express development server:
+
+```bash
+cd server
+npm run dev
+```
+
+The backend runs at `http://localhost:3000` by default. Both servers need to be running while developing the application.
 
 ## V1 - Definition of Done
 
 ### Project Setup
 
-- [ ] Create Git repository
-- [ ] Create `client` and `server` folders
-- [ ] Create Vue + TypeScript frontend
-- [ ] Create Express + TypeScript backend
+- [x] Create Git repository
+- [x] Create `client` and `server` folders
+- [x] Create Vue + TypeScript frontend
+- [x] Create Express + TypeScript backend
 - [ ] Configure `.gitignore`
 - [ ] Configure environment variables
 
