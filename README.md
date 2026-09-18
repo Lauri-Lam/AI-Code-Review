@@ -76,8 +76,8 @@ The backend runs at `http://localhost:3000` by default. Both servers need to be 
 - [x] Create `client` and `server` folders
 - [x] Create Vue + TypeScript frontend
 - [x] Create Express + TypeScript backend
-- [ ] Configure `.gitignore`
-- [ ] Configure environment variables
+- [x] Configure `.gitignore`
+- [x] Configure environment variables
 
 ### Frontend
 
@@ -94,17 +94,17 @@ The backend runs at `http://localhost:3000` by default. Both servers need to be 
 
 ### Backend
 
-- [ ] Start Express server
-- [ ] Create `POST /api/reviews`
-- [ ] Receive code, language and review type
-- [ ] Validate request body with Zod
+- [x] Start Express server
+- [x] Create `POST /api/reviews`
+- [x] Receive code, language and review type
+- [x] Validate request body with Zod
 - [ ] Create AI service
 - [ ] Build code-review prompt
 - [ ] Send request to Dahl API
 - [ ] Receive AI response
 - [ ] Parse AI response
 - [ ] Validate AI response with Zod
-- [ ] Return structured review to frontend
+- [x] Return structured review to frontend
 
 ### AI Response
 
