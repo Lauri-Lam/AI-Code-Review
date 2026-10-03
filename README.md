@@ -66,7 +66,7 @@ cd server
 npm run dev
 ```
 
-The backend runs at `http://localhost:3000` by default. Both servers need to be running while developing the application.
+The backend runs at `http://localhost:8080` by default. Both servers need to be running while developing the application.
 
 ## V1 - Definition of Done
 
