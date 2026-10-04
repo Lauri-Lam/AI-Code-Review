@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { config } from "./config.js";
 import express from "express";
 import cors from "cors";
 import reviewRoutes from "./routes/reviewRoutes.js";
@@ -12,8 +12,6 @@ app.use(
 );
 app.use("/api", reviewRoutes);
 
-const port = Number(process.env.PORT ?? 8080);
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(config.port, () => {
+  console.log(`Server is running on port ${config.port}`);
 });
