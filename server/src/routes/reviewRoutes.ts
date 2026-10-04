@@ -1,15 +1,11 @@
 import { Router } from "express";
-import { reviewRequestSchema } from "../schemas/reviewRequestSchema.js";
+import {
+  reviewRequestSchema,
+  type ReviewResult,
+} from "@ai-code-review/contracts";
 import getResults from "../services/reviewService.js";
-import type { ReviewResult } from "../schemas/reviewResultSchema.js";
 
 const router = Router();
-
-router.get("/reviews", (_req, res) => {
-  res.json({
-    message: "GET route for testing",
-  });
-});
 
 router.post("/reviews", async (req, res) => {
   const result = reviewRequestSchema.safeParse(req.body);
@@ -25,15 +21,10 @@ router.post("/reviews", async (req, res) => {
     const response: ReviewResult = await getResults(result.data);
     res.json(response);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(502).json({
-        message: `Error occured: ${error.message}`,
-      });
-    } else {
-      res.status(502).json({
-        message: `Error occured: ${String(error)}`,
-      });
-    }
+    console.error("Code review service failed.", error);
+    res.status(502).json({
+      error: "Code review service failed.",
+    });
   }
 });
 

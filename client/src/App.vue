@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { ReviewRequest } from '../../server/src/schemas/reviewRequestSchema.ts'
-import type { ReviewResult } from '../../server/src/schemas/reviewResultSchema.ts'
+import {
+  type ReviewRequest,
+  type ReviewResult,
+  type Language,
+  type ReviewType,
+} from '@ai-code-review/contracts'
 import { ref } from 'vue'
 import CodeInput from './components/CodeInput.vue'
 import LangSelector from './components/LangSelector.vue'
@@ -8,8 +12,8 @@ import TypeSelector from './components/TypeSelector.vue'
 import ReviewResults from './components/ReviewResults.vue'
 
 const code = ref('')
-const language = ref('')
-const reviewType = ref('')
+const language = ref<Language | ''>('')
+const reviewType = ref<ReviewType | ''>('')
 
 const errorMessage = ref('')
 const isLoading = ref(false)
@@ -19,15 +23,21 @@ const reviewResult = ref<null | ReviewResult>(null)
 const URL = 'http://localhost:3000'
 
 const handleSendReview = async () => {
-  reviewResult.value = null
-  const unReviewedCode: ReviewRequest = {
-    code: code.value,
-    language: language.value,
-    reviewType: reviewType.value,
-  }
-
   try {
+    reviewResult.value = null
     errorMessage.value = ''
+
+    if (code.value.trim() === '' || language.value === '' || reviewType.value === '') {
+      errorMessage.value = 'All fields must have values!'
+      return
+    }
+
+    const unReviewedCode: ReviewRequest = {
+      code: code.value,
+      language: language.value,
+      reviewType: reviewType.value,
+    }
+
     isLoading.value = true
 
     const response = await fetch(`${URL}/api/reviews`, {
@@ -38,19 +48,17 @@ const handleSendReview = async () => {
       body: JSON.stringify(unReviewedCode),
     })
 
+    const body = await response.json()
+
     if (!response.ok) {
-      errorMessage.value = 'Response from backend was not ok!'
+      errorMessage.value = body.error ?? 'Request failed.'
       return
     }
 
-    reviewResult.value = await response.json();
-
+    reviewResult.value = body
   } catch (error) {
-    if (error instanceof Error) {
-      errorMessage.value = error.message
-    } else {
-      errorMessage.value = String(error)
-    }
+    console.error('Could not complete the review request.', error)
+    errorMessage.value = 'Could not complete the review request.'
   } finally {
     isLoading.value = false
   }
@@ -59,10 +67,14 @@ const handleSendReview = async () => {
 
 <template>
   <div>
-    <ReviewResults v-if="reviewResult" :result="reviewResult"/>
+    <ReviewResults v-if="reviewResult" :result="reviewResult" />
     <CodeInput v-model="code" />
     <LangSelector v-model="language" />
     <TypeSelector v-model="reviewType" />
-    <button @click="handleSendReview">Review Code</button>
+    <button @click="handleSendReview" :disabled="isLoading">
+      {{ isLoading ? 'Reviewing...' : 'Review Code' }}
+    </button>
+    <p v-if="isLoading" role="status">Your code is being reviewed.</p>
+    <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
   </div>
 </template>

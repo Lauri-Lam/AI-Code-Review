@@ -1,6 +1,8 @@
-import type { ReviewRequest } from "../schemas/reviewRequestSchema.js";
-import type { ReviewResult } from "../schemas/reviewResultSchema.js";
-import { reviewResultSchema } from "../schemas/reviewResultSchema.js";
+import {
+  reviewResultSchema,
+  type ReviewRequest,
+  type ReviewResult,
+} from "@ai-code-review/contracts";
 
 export default async function getResults(
   request: ReviewRequest,

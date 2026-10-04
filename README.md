@@ -18,6 +18,12 @@
 
 ## Architecture
 
+The repository is an npm workspace with three packages:
+
+- `client` contains the Vue frontend.
+- `server` contains the Express backend.
+- `shared` exposes the request and response contracts used by both applications through `@ai-code-review/contracts`.
+
 ## API
 
 ### Review Endpoint
@@ -34,17 +40,13 @@
 
 ### First-time Setup
 
-After cloning the repository, open a terminal in the project root and install the dependencies for each application:
+After cloning the repository, open a terminal in the project root and install all workspace dependencies:
 
 ```bash
-cd client
-npm install
-
-cd ../server
 npm install
 ```
 
-The client and server have separate `package.json` files, so each folder must be installed independently.
+Run workspace installations from the project root. npm installs the client, server and shared contracts package together and creates one root `package-lock.json`.
 
 ### Frontend
 
@@ -66,7 +68,7 @@ cd server
 npm run dev
 ```
 
-The backend runs at `http://localhost:8080` by default. Both servers need to be running while developing the application.
+The backend uses the `PORT` environment variable. If `PORT` is absent, it defaults to `8080`. Both servers need to be running while developing the application.
 
 ## V1 - Definition of Done
 
@@ -81,16 +83,16 @@ The backend runs at `http://localhost:8080` by default. Both servers need to be 
 
 ### Frontend
 
-- [ ] Create code input
-- [ ] Create language selection
-- [ ] Create review type selection
-- [ ] Create Review Code button
-- [ ] Store form values using Vue state
-- [ ] Send review request to backend
-- [ ] Show loading state while review is running
-- [ ] Show errors when a request fails
-- [ ] Display AI review result
-- [ ] Display individual review issues
+- [x] Create code input
+- [x] Create language selection
+- [x] Create review type selection
+- [x] Create Review Code button
+- [x] Store form values using Vue state
+- [x] Send review request to backend
+- [x] Show loading state while review is running
+- [x] Show errors when a request fails
+- [x] Display AI review result
+- [x] Display individual review issues
 
 ### Backend
 
@@ -98,24 +100,24 @@ The backend runs at `http://localhost:8080` by default. Both servers need to be 
 - [x] Create `POST /api/reviews`
 - [x] Receive code, language and review type
 - [x] Validate request body with Zod
-- [ ] Create AI service
+- [x] Create AI service
 - [ ] Build code-review prompt
 - [ ] Send request to Dahl API
 - [ ] Receive AI response
 - [ ] Parse AI response
-- [ ] Validate AI response with Zod
+- [x] Validate AI response with Zod
 - [x] Return structured review to frontend
 
 ### AI Response
 
-- [ ] Return a review score
-- [ ] Return a review summary
-- [ ] Return a list of issues
-- [ ] Each issue contains severity
-- [ ] Each issue contains title
-- [ ] Each issue contains explanation
-- [ ] Each issue contains suggested fix
-- [ ] Support line numbers when available
+- [x] Return a review score
+- [x] Return a review summary
+- [x] Return a list of issues
+- [x] Each issue contains severity
+- [x] Each issue contains title
+- [x] Each issue contains explanation
+- [x] Each issue contains suggested fix
+- [x] Support line numbers when available
 
 ### PostgreSQL
 
@@ -131,22 +133,10 @@ The backend runs at `http://localhost:8080` by default. Both servers need to be 
 
 - [ ] Test complete Vue → Express → AI flow
 - [ ] Test database persistence
-- [ ] Handle invalid AI responses
-- [ ] Handle backend errors
+- [x] Handle invalid AI responses
+- [x] Handle backend errors
 - [ ] Add final UI styling
-- [ ] Replace Dahl API with local Qwen through LM Studio
-- [ ] Test complete application with local Qwen
-
-## Future Improvements
-
-### GitHub Integration
-
-### Pull Request Reviews
-
-### Diff Reviews
+- [ ] Have option to replace Dahl API with local LLM through LM Studio
+- [ ] Test complete application with local LLM
 
 ### Monaco Editor
-
-### Streaming Responses
-
-### Authentication

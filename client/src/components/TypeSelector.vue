@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const reviewTypes: string[] = ['All', 'Correctness', 'Security', 'Performance', 'Readability']
+import { REVIEW_TYPES, type ReviewType } from '@ai-code-review/contracts'
 
 defineProps<{
-  modelValue: string
+  modelValue: ReviewType | ''
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string]
+  'update:modelValue': [value: ReviewType]
 }>()
 </script>
 <template>
@@ -14,11 +14,11 @@ const emit = defineEmits<{
     <label for="type">Review Type:</label>
     <select
       id="type"
-      @change="emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
+      @change="emit('update:modelValue', ($event.target as HTMLSelectElement).value as ReviewType)"
       :value="modelValue"
     >
       <option value="" disabled>Select review type</option>
-      <option v-for="type in reviewTypes" :key="type" :value="type">{{ type }}</option>
+      <option v-for="type in REVIEW_TYPES" :key="type" :value="type">{{ type }}</option>
     </select>
   </div>
 </template>
